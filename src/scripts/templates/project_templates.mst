@@ -16,179 +16,203 @@
 {{/js}}
 </body>
 </html>
-</script><script type="x-tmpl-mustache" id="template-gulpfilejs">var gulp = require('gulp'),
+</script>
+<script type="x-tmpl-mustache" id="template-gulpfilejs">
+const gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     rename = require('gulp-rename');
 {{#css-autoprefix}}
-var autoprefixer = require('gulp-autoprefixer');
+const autoprefixer = require('gulp-autoprefixer');
 {{/css-autoprefix}}
 {{#js-es6}}
-var babel = require('gulp-babel');
+const babel = require('gulp-babel');
 {{/js-es6}}
 {{#js-coffeescript}}
-var coffee = require('gulp-coffee');
+const coffee = require('gulp-coffee');
 {{/js-coffeescript}}
 {{#js-concatenate}}
-var concat = require('gulp-concat');
+const concat = require('gulp-concat');
 {{/js-concatenate}}
-{{#js-hint}}
-var jshint = require('gulp-jshint');
-{{/js-hint}}
+{{#es-lint}}
+const eslint = require('gulp-eslint');
+{{/es-lint}}
 {{#js-minimize}}
-var uglify = require('gulp-uglify');
+const uglify = require('gulp-uglify');
 {{/js-minimize}}
 {{#images-optimize}}
-var imagemin = require('gulp-imagemin'),
+const imagemin = require('gulp-imagemin'),
     cache = require('gulp-cache');
 {{/images-optimize}}
 {{#css-minimize}}
-var minifycss = require('gulp-minify-css');
+const minifycss = require('gulp-minify-css');
 {{/css-minimize}}
 {{#css-precompile}}
 {{#gulp-less}}
-var less = require('gulp-less');
+const less = require('gulp-less');
 {{/gulp-less}}
 {{#gulp-sass}}
-var sass = require('gulp-sass');
+const sass = require('gulp-sass');
 {{/gulp-sass}}
 {{#gulp-stylus}}
-var stylus = require('gulp-stylus');
+const stylus = require('gulp-stylus');
 {{/gulp-stylus}}
 {{/css-precompile}}
 {{#browser-sync}}
-var browserSync = require('browser-sync');
+const browserSync = require('browser-sync').create();
 
-gulp.task('browser-sync', function() {
-  browserSync({
-    server: {
-       baseDir: "./"
-    }
-  });
-});
+// BrowserSync
+function browserSync(done) {
+    browserSync.init({
+        server: {
+            baseDir: "./"
+        }
+    });
+    done();
+}
 
-gulp.task('bs-reload', function () {
-  browserSync.reload();
-});
+// BrowserSync Reload
+function bsReload(done) {
+    browserSync.reload();
+    done();
+}
 {{/browser-sync}}
 
 {{#images-optimize}}
-gulp.task('images', function(){
-  gulp.src('{{{images-source}}}/**/*')
-    .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
-    .pipe(gulp.dest('{{{images-destination}}}/'));
-});
+// Optimize Images
+function images() {
+    'use strict';
+    return gulp.src('{{{images-source}}}/**/*')
+        .pipe(cache(imagemin([
+            imagemin.gifsicle({
+                interlaced: true
+            }),
+            imagemin.jpegtran({
+                progressive: true
+            }),
+            imagemin.optipng({
+                optimizationLevel: 5
+            }),
+        imagemin.svgo({
+                plugins: [
+                    {
+                        removeViewBox: true
+                    }
+		]
+            })
+        ])))
+        .pipe(gulp.dest('{{{images-destination}}}/'));
+}
 {{/images-optimize}}
 
 {{#css}}
-gulp.task('styles', function(){
+// Compile CSS
+function styles() {
+    'use strict';
+  {{#gulp-sass}}
+    return gulp.src(['{{{css-source}}}/**/*.scss'])
+        .pipe(plumber())
+        .pipe(sass())
+  {{/gulp-sass}}
   {{#gulp-less}}
-  gulp.src(['{{{css-source}}}/**/*.less'])
-    .pipe(plumber({
-      errorHandler: function (error) {
-        console.log(error.message);
-        this.emit('end');
-    }}))
+  return gulp.src(['{{{css-source}}}/**/*.less'])
+    .pipe(plumber())
     .pipe(less())
   {{/gulp-less}}
-  {{#gulp-sass}}
-  gulp.src(['{{{css-source}}}/**/*.scss'])
-    .pipe(plumber({
-      errorHandler: function (error) {
-        console.log(error.message);
-        this.emit('end');
-    }}))
-    .pipe(sass())
-  {{/gulp-sass}}
   {{#gulp-stylus}}
-  gulp.src(['{{{css-source}}}/**/*.styl'])
-    .pipe(plumber({
-      errorHandler: function (error) {
-        console.log(error.message);
-        this.emit('end');
-    }}))
+  return gulp.src(['{{{css-source}}}/**/*.styl'])
+    .pipe(plumber())
     .pipe(stylus())
   {{/gulp-stylus}}
     {{#css-autoprefix}}
-    .pipe(autoprefixer('last 2 versions'))
+        .pipe(autoprefixer())
     {{/css-autoprefix}}
     {{#css-minimize}}
-    .pipe(gulp.dest('{{{css-destination}}}/'))
-    .pipe(rename({suffix: '.min'}))
-    .pipe(minifycss())
+        .pipe(gulp.dest('{{{css-destination}}}/'))
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(minifycss())
     {{/css-minimize}}
-    .pipe(gulp.dest('{{{css-destination}}}/'))
+        .pipe(gulp.dest('{{{css-destination}}}/'))
     {{#browser-sync}}
-    .pipe(browserSync.reload({stream:true}))
+        .pipe(browserSync.stream());
     {{/browser-sync}}
-});
+}
 {{/css}}
 
 {{#js}}
-gulp.task('scripts', function(){
+// Concatenate and minify scripts
+function scripts() { 
+    'use strict';
   {{#js-coffeescript}}
   return gulp.src('{{{js-source}}}/**/*.coffee')
-    .pipe(plumber({
-      errorHandler: function (error) {
-        console.log(error.message);
-        this.emit('end');
-    }}))
+    .pipe(plumber())
     .pipe(coffee({bare: true})
   {{/js-coffeescript}}
   {{^js-coffeescript}}
-  return gulp.src('{{{js-source}}}/**/*.js')
-    .pipe(plumber({
-      errorHandler: function (error) {
-        console.log(error.message);
-        this.emit('end');
-    }}))
+    return gulp.src('{{{js-source}}}/**/*.js')
+        .pipe(plumber())
   {{/js-coffeescript}}
-    {{#js-hint}}
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'))
-    {{/js-hint}}
+        .pipe(gulp.dest('dist/scripts/'))
     {{#js-concatenate}}
-    .pipe(concat('main.js'))
+        .pipe(concat('main.js'))
     {{/js-concatenate}}
-    {{#js-es6}}
-    .pipe(babel())
-    {{/js-es6}}
     {{#js-minimize}}
-    .pipe(gulp.dest('{{{js-destination}}}/'))
-    .pipe(rename({suffix: '.min'}))
-    .pipe(uglify())
+        .pipe(gulp.dest('{{{js-destination}}}/'))
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(uglify())
     {{/js-minimize}}
-    .pipe(gulp.dest('{{{js-destination}}}/'))
+        .pipe(gulp.dest('{{{js-destination}}}/'))
     {{#browser-sync}}
-    .pipe(browserSync.reload({stream:true}))
+        .pipe(browserSync.stream());
     {{/browser-sync}}
-});
+}
+
+{{#es-lint}}
+// Lint scripts
+function scriptsLint() {
+    return gulp.src('{{{js-source}}}/**/*.js')
+        .pipe(plumber())
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
+}
+{{/es-lint}}
 {{/js}}
 
-gulp.task('default', {{#browser-sync}}['browser-sync'], {{/browser-sync}}function(){
+// Watch Files
+function watchFiles() {
+    'use strict';
   {{#css}}
   {{#gulp-less}}
-  gulp.watch("{{{css-source}}}/**/*.less", ['styles']);
+    gulp.watch("{{{css-source}}}/**/*.less", styles);
   {{/gulp-less}}
   {{#gulp-sass}}
-  gulp.watch("{{{css-source}}}/**/*.scss", ['styles']);
+    gulp.watch("{{{css-source}}}/**/*.scss", styles);
   {{/gulp-sass}}
   {{#gulp-stylus}}
-  gulp.watch("{{{css-source}}}/**/*.stylus", ['styles']);
+    gulp.watch("{{{css-source}}}/**/*.styl", styles);
   {{/gulp-stylus}}
   {{/css}}
   {{#js}}
   {{#js-coffeescript}}
-  gulp.watch("{{{js-source}}}/**/*.coffee", ['scripts']);
+    gulp.watch('{{{js-source}}}/**/*.coffee', scripts);
   {{/js-coffeescript}}
   {{^js-coffeescript}}
-  gulp.watch("{{{js-source}}}/**/*.js", ['scripts']);
+    gulp.watch('{{{js-source}}}/**/*.js', {{#es-lint}}gulp.series(scriptsLint, scripts){{/es-lint}} scripts);
   {{/js-coffeescript}}
   {{/js}}
   {{#browser-sync}}
-  gulp.watch("*.html", ['bs-reload']);
+    gulp.watch('*.html', bsReload);
   {{/browser-sync}}
-});
-</script><script type="x-tmpl-mustache" id="template-readmetxt">Quench
+    {{#images-optimize}}
+    gulp.watch("src/images/**/*", images);
+    {{/images-optimize}}
+}
+</script>
+<script type="x-tmpl-mustache" id="template-readmetxt">Quench
 
 Gulp is a command-line JavaScript task runner that automates your web workflow by way of self-scripted tasks. Quench easily creates those self-scripted tasks based on your custom input.
 
@@ -726,9 +750,9 @@ th {
     {{#js-concatenate}}
     "gulp-concat": "2.5.2",
     {{/js-concatenate}}
-    {{#js-hint}}
+    {{#es-lint}}
     "gulp-jshint": "1.10.0",
-    {{/js-hint}}
+    {{/es-lint}}
     {{#images-optimize}}
     "gulp-imagemin": "2.2.1",
     {{/images-optimize}}
