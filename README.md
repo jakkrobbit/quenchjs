@@ -1,3 +1,4 @@
+
 # QUENCH
 
 ## The Gulp file generator. Easily automate your next web project.
@@ -42,7 +43,7 @@ Quench requires both [Node](https://nodejs.org/) and [Gulp](http://gulpjs.com/).
 
 ## Included Tasks
     `gulp`
-The default. Runs all tasks choosen and watches your project folder.
+The default. Runs all selected tasks and watches your project folder.
 
 
     `gulp styles`
@@ -62,14 +63,12 @@ Runs all selected JavaScript tasks. Options are:
 * Convert ES6 to ES5
 * Linter
 
+	`gulp watch`
 
-    `gulp watch`
 Initiates BrowserSync and watches files for changes.
-
 
     `gulp images`
 Optimizes images.
-
 
     `gulp build`
 Runs all selected image, CSS, and JavaScript tasks. If not using BrowserSync, this is the same as the default `gulp` task.
