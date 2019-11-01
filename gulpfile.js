@@ -32,7 +32,7 @@ function styles() {
     return gulp.src(['src/styles/**/*.scss'])
         .pipe(plumber())
         .pipe(sass())
-        .pipe(autoprefixer(/*'last 2 versions'*/))
+        .pipe(autoprefixer( /*'last 2 versions'*/ ))
         .pipe(gulp.dest('dist/styles/'))
         .pipe(rename({
             suffix: '.min'
@@ -56,12 +56,12 @@ function images() {
             imagemin.optipng({
                 optimizationLevel: 5
             }),
-        imagemin.svgo({
+            imagemin.svgo({
                 plugins: [
                     {
                         removeViewBox: true
                     }
-		]
+                ]
             })
         ])))
         .pipe(gulp.dest('dist/images/'));

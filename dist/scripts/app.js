@@ -63,7 +63,8 @@ var quench_options = {
     'js-es6': false,
     'es-lint': false,
     'js-minimize': true,
-    'js-source': "src/scripts"
+    'js-source': "src/scripts",
+    'usingBS': true
 };
 var current_file = 'gulpfile.js';
 var isFileSaverSupported = false;
@@ -140,8 +141,8 @@ function formToJSON(form) {
         input_object['gulp-' + $('#css-precompile-type').val()] = true;
     }
 
-    var jsonString = JSON.stringify(input_object);
-    return jsonString;
+    JSON.stringify(input_object);
+    return input_object;
 }
 
 function saveFile() {
@@ -164,6 +165,7 @@ function saveFile() {
 }
 
 function saveZip() {
+    'use strict';
     var zip = new JSZip();
     $('#save-project').addClass('loading');
     ga('send', 'event', 'Save Zip', 'Initiated');
@@ -243,7 +245,24 @@ function saveZip() {
     });
 }
 
+// Switch tabs
+function handleTab(el) {
+    'use strict';
+    //Clear file classes for proper syntax highlighting
+    $('#file').removeClass();
+
+    //Set active tab
+    $('#tabs a').removeClass('active');
+    el.addClass('active');
+
+    //Render file
+    current_file = el.data('file');
+    renderFile(current_file);
+}
+
+
 $(function () {
+    'use strict';
     $('#get-started').smoothScroll({
         offset: -24
     });
@@ -282,6 +301,16 @@ $(function () {
         quench_options = formToJSON($('form'));
         renderFile(current_file);
     });
+    
+    // Watch Browsersync option
+    $('#browser-sync').change(function () {
+        if (!$(this).is(':checked')) {
+            quench_options.usingBS = false;
+        } else {
+            quench_options.usingBS = true;
+        }
+        renderFile(current_file);
+    });
 
     //Watch pre-compile
     $('#css-precompile').change(function () {
@@ -313,18 +342,4 @@ $(function () {
     });
     var copyMe = new ZeroClipboard($('#toolbar-copy'));
 });
-
-function handleTab(el) {
-    //Clear file classes for proper syntax highlighting
-    $('#file').removeClass();
-
-    //Set active tab
-    $('#tabs a').removeClass('active');
-    el.addClass('active');
-
-    //Render file
-    current_file = el.data('file');
-    renderFile(current_file);
-}
-
 //TODO: Add linkability

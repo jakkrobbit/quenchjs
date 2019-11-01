@@ -25,7 +25,7 @@
     "gulp-concat": "latest",
     {{/js-concatenate}}
     {{#es-lint}}
-    "gulp-jshint": "latest",
+    "gulp-eslint": "latest",
     {{/es-lint}}
     {{#images-optimize}}
     "gulp-imagemin": "latest",
