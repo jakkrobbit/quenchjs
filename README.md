@@ -45,23 +45,11 @@ Quench requires both [Node](https://nodejs.org/) and [Gulp](http://gulpjs.com/).
     `gulp`
 The default. Runs all selected tasks and watches your project folder.
 
-
     `gulp styles`
-Runs all selected CSS tasks. Options are:
-
-* Pre-Compile (SASS, LESS, on STYLUS)
-* Minify
-* Autoprefix
-
+Runs all selected CSS tasks.
 
     `gulp scripts`
-Runs all selected JavaScript tasks. Options are:
-
-* Compile (CoffeeScript)
-* Minify
-* Concatenate
-* Convert ES6 to ES5
-* Linter
+Runs all selected JavaScript tasks.
 
 	`gulp watch`
 
