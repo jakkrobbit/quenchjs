@@ -1,0 +1,30 @@
+.tippy-tooltip.quench-theme {
+    color: $about_color;
+    background-color: $primary_color;
+    border-radius: 4px;
+}
+
+.tippy-tooltip.quench-theme[data-animatefill] {
+  background-color: transparent;
+}
+
+.tippy-tooltip.quench-theme .tippy-backdrop {
+    background-color: $primary_color;
+}
+
+.tippy-tooltip.quench-theme[data-placement^='top'] .tippy-arrow {
+  border-top-color: $primary_color;
+}
+.tippy-tooltip.quench-theme[data-placement^='bottom'] .tippy-arrow {
+  border-bottom-color: $primary_color;
+}
+.tippy-tooltip.quench-theme[data-placement^='left'] .tippy-arrow {
+  border-left-color: $primary_color;
+}
+.tippy-tooltip.quench-theme[data-placement^='right'] .tippy-arrow {
+  border-right-color: $primary_color;
+}
+
+.tippy-tooltip.quench-theme .tippy-roundarrow {
+  fill: $primary_color;
+}

@@ -1,4 +1,4 @@
-/*global Mustache, ZeroClipboard, hljs, saveAs, JSZip, ga*/
+/*global Mustache, ZeroClipboard, hljs, saveAs, JSZip, ga, tippy*/
 
 // Helpers
 $.fn.serializeObject = function () {
@@ -44,6 +44,10 @@ var trim = (function () {
 // Variable Setup
 var quench_options = {
     'basic-gulpfile': false,
+    'proj-name': 'Quench',
+    'version': '1.0.0',
+    'descrp': 'A Gulp file and project generator.',
+    'author': 'Quench',
     'browser-sync': true,
     'css': true,
     'css-autoprefix': true,
@@ -289,6 +293,13 @@ $(function () {
     //Show file
     renderFile(current_file);
 
+    // Create tooltips
+    tippy('[data-tippy-content]', {
+        delay: [600, 0],
+        placement: 'top-end',
+        theme: 'quench'
+    });
+    
     //Watch tabs
     $('#tabs a').click(function (e) {
         e.preventDefault();
