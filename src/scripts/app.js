@@ -133,7 +133,9 @@ function formToJSON(form) {
         var el = $(this);
         if (el.is(":checkbox")) {
             input_object[el.attr('name')] = (el.is(":checked")) ? true : false;
-        } else {
+        }/* else if (el.hasClass('pkginfo')) {
+            input_object[el.attr('name')] = el.val();
+        }*/ else {
             input_object[el.attr('name')] = trim(el.val().trim(), '/');
         }
     });
