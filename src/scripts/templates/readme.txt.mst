@@ -41,14 +41,14 @@ Default Task
 
     gulp
 
-Running the default task automatically watches your project folders for any changes and runs the accompanying task. For example, if you've elected to run tasks on your JavaScript, anytime you change a JavaScript file gulp will automatically run those tasks, including a browser refresh if you've included BrowserSync.
+Runs all choosen the tasks and automatically watches your project folders for any changes before running accompanying tasks. For example, if you've elected to run tasks on your JavaScript, anytime you change a JavaScript file gulp will automatically run those tasks, including a browser refresh if you've included BrowserSync.
 {{#css}}
 
 CSS
 ---
     gulp styles
 
-Running the gulp styles task will run your selected CSS tasks once.
+Runs your selected CSS tasks once.
 {{/css}}
 {{#js}}
 
@@ -57,7 +57,13 @@ JavaScript
 
     gulp scripts
 
-Running the gulp scripts task will run your selected JavaScript tasks once.
+Runs your selected JavaScript tasks once.
+{{#browser-sync}}
+   
+    gulp watch
+
+Initiates BrowserSync and watches files.
+{{/browser-sync}}
 {{/js}}
 {{#images-optimize}}
 
@@ -66,8 +72,15 @@ Images
 
     gulp images
 
-Running the gulp images task will run your selected image tasks once.
+Runs your selected image tasks once.
 {{/images-optimize}}
+
+Other Tasks
+-----------
+
+    gulp build
+
+Runs your selected image, CSS, and JavaScript tasks. If not using BrowserSync, this is the same as the default "gulp" task.
 
 
 Feedback

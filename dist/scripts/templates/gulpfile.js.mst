@@ -190,6 +190,7 @@ function watchFiles() {
 const build = gulp.parallel(styles, {{#images-optimize}}images,{{/images-optimize}} scripts);
 {{#browser-sync}}
 const watch = gulp.parallel(watchFiles, browserSync);
+const all = gulp.parallel(build, watch);
 {{/browser-sync}}
 
 // Export tasks
@@ -202,7 +203,7 @@ exports.build = build;
 exports.watch = watch;
 {{/browser-sync}}
 {{#usingBS}}
-exports.default = watch;
+exports.default = all;
 {{/usingBS}}
 {{^usingBS}}
 exports.default = build;
