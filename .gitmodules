@@ -1,0 +1,4 @@
+[submodule "quenchjs"]
+	path = quenchjs
+	url = https://github.com/jakkrobbit/quenchjs.git
+	branch = gh-pages
