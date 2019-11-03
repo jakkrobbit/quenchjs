@@ -1,20 +1,12 @@
 {
- {{#proj-name}}
-  "name": "Quench",
- {{/proj-name}}
- {{#version}}
-  "version": "1.0.0",
- {{/version}}
- {{#descrp}}
-  "description": "A Gulp file and project generator.",
- {{/descrp}}
+  "name": "{{{proj-name}}}",
+  "version": "{{{version}}}",
+  "description": "{{{descrp}}}",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
- {{#author}}
-  "author": "Quench",
- {{/author}}
+  "author": "{{{author}}}",
   "license": "ISC",
   "devDependencies": {
     {{#browser-sync}}
@@ -28,6 +20,9 @@
     {{/js-es6}}
     {{#images-optimize}}
     "gulp-cache": "latest",
+    {{#js-coffeescript}}
+    "gulp-coffee": "latest",
+    {{/js-coffeescript}}
     {{/images-optimize}}
     {{#js-concatenate}}
     "gulp-concat": "latest",

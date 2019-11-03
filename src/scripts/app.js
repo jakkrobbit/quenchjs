@@ -43,11 +43,8 @@ var trim = (function () {
 
 // Variable Setup
 var quench_options = {
-    'basic-gulpfile': false,
-    'proj-name': 'Quench',
-    'version': '1.0.0',
-    'descrp': 'A Gulp file and project generator.',
     'author': 'Quench',
+    'basic-gulpfile': false,
     'browser-sync': true,
     'css': true,
     'css-autoprefix': true,
@@ -56,6 +53,7 @@ var quench_options = {
     'css-precompile': true,
     'css-precompile-type': "sass",
     'css-source': "src/styles",
+    'descrp': 'A Gulp file and project generator.',
     'gulp-sass': true,
     'images-destination': "dist/images",
     'images-optimize': true,
@@ -68,6 +66,8 @@ var quench_options = {
     'es-lint': false,
     'js-minimize': true,
     'js-source': "src/scripts",
+    'proj-name': 'Quench',
+    'version': '1.0.0',
     'usingBS': true
 };
 var current_file = 'gulpfile.js';
@@ -83,7 +83,7 @@ function displayFile(file) {
 
 function renderFile(file, renderOnly) {
     'use strict';
-    var pJSON = '';
+    var pJSON;
 
     if (renderOnly === undefined) {
         renderOnly = false;
@@ -133,17 +133,15 @@ function formToJSON(form) {
         var el = $(this);
         if (el.is(":checkbox")) {
             input_object[el.attr('name')] = (el.is(":checked")) ? true : false;
-        }/* else if (el.hasClass('pkginfo')) {
-            input_object[el.attr('name')] = el.val();
-        }*/ else {
+        } else {
             input_object[el.attr('name')] = trim(el.val().trim(), '/');
         }
     });
 
-    input_object.css = $('#css-precompile, #css-autoprefix, #css-remove').is(':checked') ? true : false;
+    input_object.css = $('#css-precompile, #css-autoprefix').is(':checked') ? true : false;
     input_object.js = $('#js-coffeescript, #js-es6, #es-lint, #js-concatenate, #js-minimize').is(':checked') ? true : false;
 
-    if ($('#css-precompile:checked') && $('#css-precompile-type').val() != 'none') {
+    if ($('#css-precompile').is(':checked')) {
         input_object['gulp-' + $('#css-precompile-type').val()] = true;
     }
 
@@ -301,7 +299,7 @@ $(function () {
         placement: 'top-end',
         theme: 'quench'
     });
-    
+
     //Watch tabs
     $('#tabs a').click(function (e) {
         e.preventDefault();
@@ -314,7 +312,7 @@ $(function () {
         quench_options = formToJSON($('form'));
         renderFile(current_file);
     });
-    
+
     // Watch Browsersync option
     $('#browser-sync').change(function () {
         if (!$(this).is(':checked')) {

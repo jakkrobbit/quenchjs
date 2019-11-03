@@ -21,7 +21,7 @@ const uglify = require('gulp-uglify');
 {{/js-minimize}}
 {{#images-optimize}}
 const imagemin = require('gulp-imagemin'),
-cache = require('gulp-cache');
+    cache = require('gulp-cache');
 {{/images-optimize}}
 {{#css-minimize}}
 const minifycss = require('gulp-minify-css');
