@@ -42,21 +42,21 @@ Quench requires both [Node](https://nodejs.org/) and [Gulp](http://gulpjs.com/).
 5. Code away!
 
 ## Included Tasks
-    `gulp`
+    gulp
 The default. Runs all selected tasks and watches your project folder.
 
-    `gulp styles`
+    gulp styles
 Runs all selected CSS tasks.
 
-    `gulp scripts`
+    gulp scripts
 Runs all selected JavaScript tasks.
 
-	`gulp watch`
+	gulp watch
 
 Initiates BrowserSync and watches files for changes.
 
-    `gulp images`
+    gulp images
 Optimizes images.
 
-    `gulp build`
+    gulp build
 Runs all selected image, CSS, and JavaScript tasks. If not using BrowserSync, this is the same as the default `gulp` task.
