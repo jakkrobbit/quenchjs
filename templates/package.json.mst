@@ -1,0 +1,55 @@
+{
+  "name": "{{{proj-name}}}",
+  "version": "{{{version}}}",
+  "description": "{{{descrp}}}",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "{{{author}}}",
+  "license": "ISC",
+  "devDependencies": {
+    {{#browser-sync}}
+    "browser-sync": "latest",
+    {{/browser-sync}}
+    {{#css-autoprefix}}
+    "gulp-autoprefixer": "latest",
+    {{/css-autoprefix}}
+    {{#js-es6}}
+    "gulp-babel": "latest",
+    {{/js-es6}}
+    {{#images-optimize}}
+    "gulp-cache": "latest",
+    {{#js-coffeescript}}
+    "gulp-coffee": "latest",
+    {{/js-coffeescript}}
+    {{/images-optimize}}
+    {{#js-concatenate}}
+    "gulp-concat": "latest",
+    {{/js-concatenate}}
+    {{#es-lint}}
+    "gulp-eslint": "latest",
+    {{/es-lint}}
+    {{#images-optimize}}
+    "gulp-imagemin": "latest",
+    {{/images-optimize}}
+    {{#gulp-less}}
+    "gulp-less": "latest",
+    {{/gulp-less}}
+    {{#css-minimize}}
+    "gulp-minify-css": "latest",
+    {{/css-minimize}}
+    "gulp-plumber": "latest",
+    "gulp-rename": "latest",
+    {{#gulp-sass}}
+    "gulp-sass": "latest",
+    {{/gulp-sass}}
+    {{#gulp-stylus}}
+    "gulp-stylus": "latest",
+    {{/gulp-stylus}}
+    {{#js-minimize}}
+    "gulp-uglify": "latest",
+    {{/js-minimize}}
+    "gulp": "latest"
+  }
+}

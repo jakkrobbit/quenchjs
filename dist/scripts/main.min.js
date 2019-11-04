@@ -1077,7 +1077,7 @@ function renderFile(file, renderOnly) {
         return pJSON;
     } else {
         $.ajax({
-            url: '/dist/scripts/templates/' + file + '.mst',
+            url: './templates/' + file + '.mst',
             dataType: 'text',
             success: function (template) {
                 //Save template
