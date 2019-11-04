@@ -174,7 +174,7 @@ function saveZip() {
     ga('send', 'event', 'Save Zip', 'Initiated');
 
     $.ajax({
-        url: '/dist/scripts/templates/project_templates.mst',
+        url: './templates/project_templates.mst',
         dataType: 'text',
         success: function (templates) {
             var h = $(templates);
