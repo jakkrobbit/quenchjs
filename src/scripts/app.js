@@ -67,8 +67,7 @@ var quench_options = {
     'js-minimize': true,
     'js-source': "src/scripts",
     'proj-name': 'Quench',
-    'version': '1.0.0',
-    'usingBS': true
+    'version': '1.0.0'
 };
 var current_file = 'gulpfile.js';
 var isFileSaverSupported = false;
@@ -310,16 +309,6 @@ $(function () {
     //Watch selects
     $('input:checkbox, select').change(function () {
         quench_options = formToJSON($('form'));
-        renderFile(current_file);
-    });
-
-    // Watch Browsersync option
-    $('#browser-sync').change(function () {
-        if (!$(this).is(':checked')) {
-            quench_options.usingBS = false;
-        } else {
-            quench_options.usingBS = true;
-        }
         renderFile(current_file);
     });
 

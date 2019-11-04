@@ -89,6 +89,7 @@ function mstFiles() {
     return gulp.src('src/scripts/templates/*.mst')
         .pipe(plumber())
         .pipe(gulp.dest('dist/scripts/templates/'))
+        .pipe(gulp.dest('templates/'))
         .pipe(browserSync.stream());
 }
 
