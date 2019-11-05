@@ -98,7 +98,7 @@ function watchFiles() {
     'use strict';
     gulp.watch("src/styles/**/*.scss", styles);
     gulp.watch(['src/scripts/plugins/**/*.js', 'src/scripts/app.js'], scripts);
-    gulp.watch('*.html', bsReload);
+    gulp.watch(['*.html', '**/*.mst'], bsReload);
     gulp.watch('src/scripts/templates/*.mst', mstFiles);
     gulp.watch("src/images/**/*", images);
 }

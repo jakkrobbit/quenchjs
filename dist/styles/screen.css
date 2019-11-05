@@ -799,14 +799,16 @@ header {
   box-shadow: 0 1px solid #262626;
   font-size: 1.3rem;
   padding: 1.2rem; }
-  #file-toolbar li, #file-toolbar a {
+  #file-toolbar li, #file-toolbar button {
     display: inline-block; }
   #file-toolbar li {
     margin-right: 1.2rem; }
-  #file-toolbar a {
+  #file-toolbar button {
     color: #dbdbdb;
     text-decoration: none;
-    text-shadow: 0 -1px 0 #414141; }
+    text-shadow: 0 -1px 0 #414141;
+    background: none;
+    border: none; }
   #file-toolbar:after {
     background: #a5c261;
     border-radius: 4px;

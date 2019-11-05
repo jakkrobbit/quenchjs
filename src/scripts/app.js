@@ -1,4 +1,4 @@
-/*global Mustache, ZeroClipboard, hljs, saveAs, JSZip, ga, tippy*/
+/*global $, navigator, Mustache, Blob, ClipboardJS, hljs, saveAs, JSZip, ga, tippy*/
 
 // Helpers
 $.fn.serializeObject = function () {
@@ -190,7 +190,7 @@ function saveZip() {
             zip.file("readme.txt", renderFile("readme.txt", true));
 
             if (quench_options['basic-gulpfile'] === false) {
-                zip.file("index.html", renderFile("index.html", true));
+                /*zip.file("index.html", renderFile("index.html", true));
 
                 if (quench_options.css) {
                     zip.folder(quench_options['css-source']);
@@ -228,19 +228,22 @@ function saveZip() {
 
                 if (quench_options['images-optimize']) {
                     zip.folder(quench_options['images-source']);
-                }
+                }*/
 
-                var zipBlob = zip.generate({
+                zip.generateAsync({
                     type: "blob"
+                }).then(function (blob) {
+                    saveAs(blob, "quench-project.zip");
                 });
-                saveAs(zipBlob, "quench-project.zip");
                 $('#save-project').removeClass('loading');
                 ga('send', 'event', 'Save Zip', 'Succes', 'Full Project');
             } else {
-                var zipBlob = zip.generate({
+                zip.remove("readme.txt");
+                zip.generateAsync({
                     type: "blob"
+                }).then(function (blob) {
+                    saveAs(blob, "quench-project.zip");
                 });
-                saveAs(zipBlob, "quench-project.zip");
                 $('#save-project').removeClass('loading');
                 ga('send', 'event', 'Save Zip', 'Succes', 'Basic Project');
             }
@@ -327,19 +330,18 @@ $(function () {
         renderFile(current_file);
     });
 
-    //Set up copy functionality
-    ZeroClipboard.config({
-        swfPath: "/dist/scripts/plugins/ZeroClipboard.swf"
-    });
-    $('#toolbar-copy').click(function (e) {
-        e.preventDefault();
+    //Copy file text
+    var copyBtn = new ClipboardJS('#toolbar-copy');
 
-        ga('send', 'event', 'Copy', 'Click');
+    copyBtn.on('success', function (e) {
         $('#file-toolbar').addClass('flash-copied');
         setTimeout(function () {
             $('#file-toolbar').removeClass('flash-copied');
-        }, 4000);
+        }, 1000);
+        
+        e.clearSelection();
     });
-    var copyMe = new ZeroClipboard($('#toolbar-copy'));
+    
 });
+
 //TODO: Add linkability

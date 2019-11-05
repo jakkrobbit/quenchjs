@@ -187,18 +187,23 @@ function watchFiles() {
 }
 
 // Group complex tasks
-const build = gulp.parallel(styles,{{#images-optimize}} images,{{/images-optimize}} scripts);
+const build = gulp.parallel({{#css}}styles,{{/css}}{{#images-optimize}} images, {{/images-optimize}} {{#js}}scripts{{/js}});
 {{#browser-sync}}
 const watch = gulp.parallel(watchFiles, browserSync);
-const all = gulp.parallel(styles,{{#images-optimize}} images,{{/images-optimize}} scripts, watch);
+const all = gulp.parallel({{#css}}styles,{{/css}}{{#images-optimize}} images,{{/images-optimize}} {{#js}} scripts,{{/js}} watch);
 {{/browser-sync}}
 
 // Export tasks
+exports.build = build;
 {{#images-optimize}}
 exports.images = images;
 {{/images-optimize}}
+{{#js}}
+exports.scripts = scripts;
+{{/js}}
+{{#css}}
 exports.styles = styles;
-exports.build = build;
+{{/css}}
 {{#browser-sync}}
 exports.watch = watch;
 {{/browser-sync}}

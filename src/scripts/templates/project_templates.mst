@@ -1,4 +1,5 @@
-<script type="x-tmpl-mustache" id="template-indexhtml"><!DOCTYPE html>
+<script type="x-tmpl-mustache" id="template-indexhtml">
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -212,7 +213,8 @@ function watchFiles() {
     {{/images-optimize}}
 }
 </script>
-<script type="x-tmpl-mustache" id="template-readmetxt">Quench
+<script type="x-tmpl-mustache" id="template-readmetxt">
+Quench
 
 Gulp is a command-line JavaScript task runner that automates your web workflow by way of self-scripted tasks. Quench easily creates those self-scripted tasks based on your custom input.
 
@@ -239,7 +241,7 @@ Installing Supplemental Files
 
 For all of this magic to work, your computer needs a few extra files to get Gulp up and running in your project.
 
-You'll need to make sure you have both [Node](http://nodejs.org) and [Gulp](http://gulpjs.com) installed before moving forward. If you already have both, keep on going, and if not, you'll only need to install them once.
+You'll need to make sure you have both Node (http://nodejs.org) and Gulp (http://gulpjs.com) installed before moving forward. If you already have both, keep on going, and if not, you'll only need to install them once.
 
 Navigate to your project directory using the command line and run the following command:
     npm install
@@ -255,14 +257,14 @@ Default Task
 
     gulp
 
-Running the default task automatically watches your project folders for any changes and runs the accompanying task. For example, if you've elected to run tasks on your JavaScript, anytime you change a JavaScript file gulp will automatically run those tasks, including a browser refresh if you've included BrowserSync.
+Runs all choosen the tasks and automatically watches your project folders for any changes before running accompanying tasks. For example, if you've elected to run tasks on your JavaScript, anytime you change a JavaScript file gulp will automatically run those tasks, including a browser refresh if you've included BrowserSync.
 {{#css}}
 
 CSS
 ---
     gulp styles
 
-Running the gulp styles task will run your selected CSS tasks once.
+Runs your selected CSS tasks once.
 {{/css}}
 {{#js}}
 
@@ -271,7 +273,13 @@ JavaScript
 
     gulp scripts
 
-Running the gulp scripts task will run your selected JavaScript tasks once.
+Runs your selected JavaScript tasks once.
+{{#browser-sync}}
+   
+    gulp watch
+
+Initiates BrowserSync and watches files.
+{{/browser-sync}}
 {{/js}}
 {{#images-optimize}}
 
@@ -280,14 +288,29 @@ Images
 
     gulp images
 
-Running the gulp images task will run your selected image tasks once.
+Runs your selected image tasks once.
+{{/images-optimize}}
+
+Other Tasks
+-----------
+
+    gulp build
+
+Runs all selected image, CSS, and JavaScript tasks. If not using BrowserSync, this is the same as the default "gulp" task.
+{{#browser-sync}}
+      
+    gulp all
+
+Runs all selected tasks. The same as the default "gulp" task.
+{{/browser-sync}}
 
 Feedback
 ========
 
 I'd love to hear your thoughts on Quench, any suggestions you might have, or any bugs you come across. Send all feedback to: feedback@quenchjs.com
-{{/images-optimize}}
-</script><script type="x-tmpl-mustache" id="template-screencss">@import 'base/variables';
+</script>
+<script type="x-tmpl-mustache" id="template-screencss">
+@import 'base/variables';
 
 @import 'base/normalize';
 @import 'base/global';
@@ -300,7 +323,9 @@ I'd love to hear your thoughts on Quench, any suggestions you might have, or any
 
 // Import Plugins
 // @import 'plugins/plugin';
-</script><script type="x-tmpl-mustache" id="template-normalizecss">/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+</script>
+<script type="x-tmpl-mustache" id="template-normalizecss">
+/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 /**
  * 1. Set default font family to sans-serif.
@@ -724,7 +749,9 @@ td,
 th {
   padding: 0;
 }
-</script><script type="x-tmpl-mustache" id="template-packagejson">{
+</script>
+<script type="x-tmpl-mustache" id="template-packagejson">
+{
  "name": "{{{proj-name}}}",
   "version": "{{{version}}}",
   "description": "{{{descrp}}}",

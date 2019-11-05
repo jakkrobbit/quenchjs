@@ -25,7 +25,7 @@ Installing Supplemental Files
 
 For all of this magic to work, your computer needs a few extra files to get Gulp up and running in your project.
 
-You'll need to make sure you have both [Node](http://nodejs.org) and [Gulp](http://gulpjs.com) installed before moving forward. If you already have both, keep on going, and if not, you'll only need to install them once.
+You'll need to make sure you have both Node (http://nodejs.org) and Gulp (http://gulpjs.com) installed before moving forward. If you already have both, keep on going, and if not, you'll only need to install them once.
 
 Navigate to your project directory using the command line and run the following command:
     npm install
@@ -80,8 +80,13 @@ Other Tasks
 
     gulp build
 
-Runs your selected image, CSS, and JavaScript tasks. If not using BrowserSync, this is the same as the default "gulp" task.
+Runs all selected image, CSS, and JavaScript tasks. If not using BrowserSync, this is the same as the default "gulp" task.
+{{#browser-sync}}
+      
+    gulp all
 
+Runs all selected tasks. The same as the default "gulp" task.
+{{/browser-sync}}
 
 Feedback
 ========

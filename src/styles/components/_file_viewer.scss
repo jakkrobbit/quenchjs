@@ -74,7 +74,7 @@
 	font-size: 1.3rem;
 	padding: 1.2rem;
 
-	li, a {
+	li, button {
 		display: inline-block;
 	}
 
@@ -82,10 +82,12 @@
 		margin-right: 1.2rem;
 	}
 
-	a {
+	button {
 		color: mix(#4C4C4C, #FFF, 20%);
 		text-decoration: none;
 		text-shadow: 0 -1px 0 mix(#4C4C4C, #000, 85%);
+        background: none;
+        border: none;
 	}
 
 	&:after {
