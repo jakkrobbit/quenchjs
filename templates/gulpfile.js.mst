@@ -120,10 +120,10 @@ function styles() {
     }
 {{/css}}
 
-{{#js}}
 // Concatenate, minify, and lint scripts
 function scripts() {
     'use strict';
+{{#js}}
     {{#js-coffeescript}}
     return gulp.src('{{{js-source}}}/**/*.coffee')
         .pipe(plumber())
@@ -138,7 +138,7 @@ function scripts() {
         .pipe(eslint.failAfterError());
     {{/es-lint}}
     {{/js-coffeescript}}
-        .pipe(gulp.dest('dist/scripts/'))
+        .pipe(gulp.dest('{{{js-destination}}}/'))
     {{#js-concatenate}}
         .pipe(concat('main.js'))
     {{/js-concatenate}}
@@ -153,8 +153,16 @@ function scripts() {
     {{#browser-sync}}
         .pipe(browserSync.stream());
     {{/browser-sync}}
-    }
 {{/js}}
+{{^js}}
+    return gulp.src('{{{js-source}}}/**/*.js')
+        .pipe(plumber())
+        .pipe(gulp.dest('{{{js-destination}}}/'))
+    {{#browser-sync}}
+        .pipe(browserSync.stream());
+    {{/browser-sync}} 
+{{/js}}
+}
 
 // Watch Files
 function watchFiles() {
@@ -187,10 +195,10 @@ function watchFiles() {
 }
 
 // Group complex tasks
-const build = gulp.parallel({{#css}}styles,{{/css}}{{#images-optimize}} images, {{/images-optimize}} {{#js}}scripts{{/js}});
+const build = gulp.parallel({{#css}}styles, {{/css}}{{#images-optimize}}images, {{/images-optimize}}scripts);
 {{#browser-sync}}
 const watch = gulp.parallel(watchFiles, browserSync);
-const all = gulp.parallel({{#css}}styles,{{/css}}{{#images-optimize}} images,{{/images-optimize}} {{#js}} scripts,{{/js}} watch);
+const all = gulp.parallel({{#css}}styles,{{/css}}{{#images-optimize}} images,{{/images-optimize}} scripts, watch);
 {{/browser-sync}}
 
 // Export tasks
