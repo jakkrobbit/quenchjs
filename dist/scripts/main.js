@@ -1031,6 +1031,7 @@ var quench_options = {
     'js-minimize': true,
     'js-source': "src/scripts",
     'proj-name': 'Quench',
+    'rename': true,
     'version': '1.0.0'
 };
 var current_file = 'gulpfile.js';
@@ -1103,6 +1104,7 @@ function formToJSON(form) {
 
     input_object.css = $('#css-precompile, #css-autoprefix').is(':checked') ? true : false;
     input_object.js = $('#js-coffeescript, #js-es6, #es-lint, #js-concatenate, #js-minimize').is(':checked') ? true : false;
+    input_object.rename = $('#js-minimize, #css-minimize').is(':checked') ? true : false;
 
     if ($('#css-precompile').is(':checked')) {
         input_object['gulp-' + $('#css-precompile-type').val()] = true;
